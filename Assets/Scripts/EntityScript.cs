@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 //bassed off of an old platfromer movement tutorial: https://learn.unity.com/tutorial/live-session-2d-platformer-character-controller#5c7f8528edbc2a002053b695
 //and an old script i made based off said tutorial: https://github.com/trimute2/FightToTheTop/blob/master/Assets/None%20Plugins/Scripts/ComponentScripts/EntityControllerComp.cs
@@ -8,12 +9,27 @@ using UnityEngine;
 public class EntityScript : MonoBehaviour
 {
 
+	public Action ComputeTargetVelocity;
+
 	public float minMoveDistance;
 
 	[HideInInspector]
 	public Vector2 targetVelocity;
 
 	private Vector2 velocity;
+
+	public Vector2 Velocity
+	{
+		get
+		{
+			return velocity;
+		}
+		set
+		{
+			velocity = value;
+		}
+	}
+
 	private Vector2 groundNormal;
 
 	private ContactFilter2D contactFilter;
@@ -31,11 +47,11 @@ public class EntityScript : MonoBehaviour
 	}
 
 	//other components
-	private Rigidbody2D rigidbody;
+	private Rigidbody2D rbody;
 
     void OnEnable()
     {
-		rigidbody = GetComponent<Rigidbody2D>();
+		rbody = GetComponent<Rigidbody2D>();
     }
 
 	void Start()
@@ -48,13 +64,15 @@ public class EntityScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        
+		targetVelocity = Vector2.zero;
+		ComputeTargetVelocity.Invoke();
     }
 
 	private void FixedUpdate()
 	{
 		velocity += Physics2D.gravity * Time.deltaTime;
 		velocity.x = targetVelocity.x;
+		velocity.y += targetVelocity.y;
 
 		grounded = false;
 
@@ -67,6 +85,10 @@ public class EntityScript : MonoBehaviour
 		Movement(move, false);
 
 		move = Vector2.up * deltaPosition.y;
+		if(targetVelocity.y > 0)
+		{
+			Debug.Log(move.y);
+		}
 
 		Movement(move, true);
 	}
@@ -77,7 +99,7 @@ public class EntityScript : MonoBehaviour
 
 		if (distance > minMoveDistance)
 		{
-			int count = rigidbody.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
+			int count = rbody.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
 			hitBufferList.Clear();
 			for (int i = 0; i < count; i++)
 			{
@@ -107,6 +129,6 @@ public class EntityScript : MonoBehaviour
 				distance = modifiedDistance < distance ? modifiedDistance : distance;
 			}
 		}
-		rigidbody.position = rigidbody.position + move.normalized * distance;
+		rbody.position = rbody.position + move.normalized * distance;
 	}
 }
