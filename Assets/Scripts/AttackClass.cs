@@ -6,6 +6,8 @@ using UnityEngine;
 public class AttackClass 
 {
 	public int Priority;
+	public int MyLinkValue;
+	public int RequiredLinkValue;
 	public bool takesAttackInput1;
 	public bool takesAttackInput2;
 
@@ -19,8 +21,6 @@ public class AttackClass
 	public float attackLength;
 
 	public int damage;
-
-	public AttackClass[] linkedAttacks;
 
 	private float AttackTimer;
 
@@ -56,9 +56,10 @@ public class AttackClass
 		hasDamaged = false;
 	}
 
-	public bool TakesInput(bool AttackInput1, bool AttackInput2, int currentPriority)
+	public bool TakesInput(bool AttackInput1, bool AttackInput2, int linkValue, int currentPriority)
 	{
-		bool canAttack = Priority > currentPriority;
+		bool canAttack = Priority > currentPriority&& (MyLinkValue == 0 || RequiredLinkValue == linkValue);
+		
 		if(takesAttackInput1 && !AttackInput1)
 		{
 			canAttack = false;

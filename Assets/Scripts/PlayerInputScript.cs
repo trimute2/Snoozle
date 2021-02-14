@@ -76,20 +76,14 @@ public class PlayerInputScript : MonoBehaviour
 			//loop through all attacks and check if one is availible
 			int priority = 0;
 			AttackClass nextAttack = null;
+			int linkValue = 0;
 			if(CurrentAttack != null)
 			{
-				foreach (AttackClass attack in CurrentAttack.linkedAttacks)
-				{
-					if (attack.TakesInput(Attack1Input, Attack2Input, priority))
-					{
-						nextAttack = attack;
-						priority = nextAttack.Priority;
-					}
-				}
+				linkValue = CurrentAttack.MyLinkValue;
 			}
 			foreach(AttackClass attack in attacks)
 			{
-				if (attack.TakesInput(Attack1Input, Attack2Input, priority))
+				if (attack.TakesInput(Attack1Input, Attack2Input, linkValue, priority))
 				{
 					nextAttack = attack;
 					priority = nextAttack.Priority;
