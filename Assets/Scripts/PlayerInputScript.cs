@@ -61,11 +61,11 @@ public class PlayerInputScript : MonoBehaviour
 		if (AllowAttackInput)
 		{
 			//buffer attack inputs
-			if (Input.GetButton("fire"))
+			if (Input.GetButton("Fire1"))
 			{
 				Attack1Input = true;
 			}
-			if (Input.GetButton("fire2"))
+			if (Input.GetButton("Fire2"))
 			{
 				Attack2Input = true;
 			}
