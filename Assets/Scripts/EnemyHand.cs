@@ -49,6 +49,8 @@ public class EnemyHand : MonoBehaviour
 
     private float timeMultiplier;
 
+	private bool attacking;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +61,7 @@ public class EnemyHand : MonoBehaviour
         rnd = new System.Random();
         atHorizontalEdge = false;
         timeMultiplier = battleManager.timeMultiplier;
+		attacking = false;
     }
 
     // Update is called once per frame
@@ -189,6 +192,7 @@ public class EnemyHand : MonoBehaviour
         //Step 2: The hand moves quickly along the floor until it reaches the other side of the arena
         else if (movingRight)
         {
+			attacking = true;
             transform.position += new Vector3 (horizontalSwipeXSpeed * Time.deltaTime * timeMultiplier, 0, 0);
 
             //Once the hand reaches the other side of the arena, return to moving state
@@ -196,10 +200,12 @@ public class EnemyHand : MonoBehaviour
             {
                 currentState = HandState.Move;
                 actionTimer = 0f;
+				attacking = false;
             }
         }
         else if (!movingRight)
         {
+			attacking = true;
             transform.position -= new Vector3 (horizontalSwipeXSpeed * Time.deltaTime * timeMultiplier, 0, 0);
 
             //Once the hand reaches the other side of the arena, return to moving state
@@ -207,6 +213,7 @@ public class EnemyHand : MonoBehaviour
             {
                 currentState = HandState.Move;
                 actionTimer = 0f;
+				attacking = false;
             }
         }
     }
@@ -233,6 +240,7 @@ public class EnemyHand : MonoBehaviour
         else
         {
             transform.position -= new Vector3(0, verticalSlamSpeed * Time.deltaTime * timeMultiplier, 0);
+			attacking = true;
         }
 
         //Once the attck's duration has been reached, return to moving state
@@ -240,6 +248,16 @@ public class EnemyHand : MonoBehaviour
         {
             currentState = HandState.Move;
             actionTimer = 0f;
+			attacking = false;
         }
     }
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		PlayerInputScript PIS = collision.collider.GetComponent<PlayerInputScript>();
+		if(PIS!= null&& attacking)
+		{
+			PIS.Damage(1);
+		}
+	}
 }

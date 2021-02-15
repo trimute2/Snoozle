@@ -46,7 +46,7 @@ public class AttackClass
 
 		if(AttackTimer >= attackLength)
 		{
-			
+			player.EndAttack();
 		}
 	}
 	

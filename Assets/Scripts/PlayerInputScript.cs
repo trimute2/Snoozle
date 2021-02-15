@@ -14,6 +14,10 @@ public class PlayerInputScript : MonoBehaviour
 
 	public LayerMask enemylayer;
 
+	public float damageTime;
+
+	private float damageTimer;
+
 	private bool Attack1Input;
 	private bool Attack2Input;
 
@@ -24,10 +28,15 @@ public class PlayerInputScript : MonoBehaviour
 
 	private AttackClass CurrentAttack;
 
+	private int facing;
+
+	private SpriteRenderer spriteRenderer;
+
 	private void OnEnable()
 	{
 		entityScript = GetComponent<EntityScript>();
 		entityScript.ComputeTargetVelocity += ComputeVelocity;
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		AllowAttackInput = true;
 		Attack1Input = false;
 	}
@@ -38,7 +47,13 @@ public class PlayerInputScript : MonoBehaviour
     {
 		Vector2 move = Vector2.zero;
 		move.x = Input.GetAxis("Horizontal") * MaxSpeed;
-
+		if(move.x > 0)
+		{
+			facing = 1;
+		}else if(move.x < 0)
+		{
+			facing = -1;
+		}
 
 		if (Input.GetButtonDown("Jump")&&entityScript.Grounded)
 		{
@@ -95,6 +110,17 @@ public class PlayerInputScript : MonoBehaviour
 				StartAttack(nextAttack);
 			}
 		}
+
+		if(damageTimer > 0)
+		{
+			damageTimer -= Time.deltaTime;
+			if(damageTimer <= 0)
+			{
+				spriteRenderer.color = Color.white;
+			}
+		}
+
+		spriteRenderer.flipX = facing == -1;
 	}
 
 	public void StartAttack(AttackClass attack)
@@ -111,8 +137,23 @@ public class PlayerInputScript : MonoBehaviour
 		AllowNewAttack = allowAttack;
 	}
 
+	public void EndAttack()
+	{
+		CurrentAttack = null;
+	}
+
 	public Collider2D[] ThrowAttack(Vector2 AttackPosition, Vector2 AttackSize)
 	{
-		return Physics2D.OverlapBoxAll(AttackPosition+new Vector2(transform.position.x,transform.position.y), AttackSize, 0f, enemylayer);
+		return Physics2D.OverlapBoxAll(new Vector2(transform.position.x+AttackPosition.x*facing,transform.position.y+AttackPosition.y), AttackSize, 0f, enemylayer);
+	}
+
+	public void Damage(int damageAmount)
+	{
+		if (damageTimer <= 0)
+		{
+			damageTimer = damageTime;
+			spriteRenderer.color = Color.red;
+			//deal damage
+		}
 	}
 }
