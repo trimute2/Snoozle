@@ -1544,6 +1544,11 @@ PrefabInstance:
       propertyPath: TakeOffSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 8848850067828593438, guid: cc0a66eed6685884e8b769e9e2cd1f6f,
+        type: 3}
+      propertyPath: enemylayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8848850067828593439, guid: cc0a66eed6685884e8b769e9e2cd1f6f,
         type: 3}
       propertyPath: m_SpriteTilingProperty.border.x

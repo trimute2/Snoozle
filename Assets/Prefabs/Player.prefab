@@ -134,10 +134,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 7
   TakeOffSpeed: 7
-  attacks: []
+  attacks:
+  - Priority: 1
+    MyLinkValue: 0
+    RequiredLinkValue: 0
+    takesAttackInput1: 1
+    takesAttackInput2: 0
+    attackPosition: {x: 2.97, y: 0}
+    attackSize: {x: 4.12, y: 5.24}
+    blockAttackInputTime: 0
+    blockNewAttackTime: 0
+    damageTime: 0.5
+    attackLength: 1
+    damage: 1
   enemylayer:
     serializedVersion: 2
     m_Bits: 0
+  damageTime: 0
 --- !u!61 &8848850067828593439
 BoxCollider2D:
   m_ObjectHideFlags: 0

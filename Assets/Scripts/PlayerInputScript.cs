@@ -41,6 +41,7 @@ public class PlayerInputScript : MonoBehaviour
 		entityScript.ComputeTargetVelocity += ComputeVelocity;
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		AllowAttackInput = true;
+		AllowNewAttack = true;
 		Attack1Input = false;
 	}
 
@@ -147,10 +148,13 @@ public class PlayerInputScript : MonoBehaviour
 	public void EndAttack()
 	{
 		CurrentAttack = null;
+		AllowAttackInput = true;
+		AllowNewAttack = true;
 	}
 
 	public Collider2D[] ThrowAttack(Vector2 AttackPosition, Vector2 AttackSize)
 	{
+		Debug.DrawLine(new Vector3(transform.position.x + AttackPosition.x * facing - AttackSize.x / 2, transform.position.y + AttackPosition.y), new Vector3(transform.position.x + AttackPosition.x * facing + AttackSize.x / 2, transform.position.y + AttackPosition.y),Color.red,5);
 		return Physics2D.OverlapBoxAll(new Vector2(transform.position.x+AttackPosition.x*facing,transform.position.y+AttackPosition.y), AttackSize, 0f, enemylayer);
 	}
 
