@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class abilities : MonoBehaviour
 {
-
+    public GameObject mainCamera;
+    private BattleManager battleManager;
     public Image abilityImage1;
     public float cooldown = 20;
     bool isCooldown = false;
@@ -14,6 +15,7 @@ public class abilities : MonoBehaviour
     void Start()
     {
         abilityImage1.fillAmount = 0;
+        battleManager = mainCamera.GetComponent<BattleManager>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,7 @@ public class abilities : MonoBehaviour
         {
             isCooldown = true;
             abilityImage1.fillAmount = 1;
+            battleManager.timeMultiplier = 0.2f;
         }
 
         if (isCooldown)
@@ -38,6 +41,7 @@ public class abilities : MonoBehaviour
             {
                 abilityImage1.fillAmount = 0;
                 isCooldown = false;
+                battleManager.timeMultiplier = 1.0f;
             }
         }
     }
