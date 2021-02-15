@@ -50,6 +50,12 @@ public class EnemyHand : MonoBehaviour
     private float timeMultiplier;
 
 	private bool attacking;
+	private Renderer renderer;
+
+	private Color base1;
+	private Color base2;
+
+	private float damageTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +68,16 @@ public class EnemyHand : MonoBehaviour
         atHorizontalEdge = false;
         timeMultiplier = battleManager.timeMultiplier;
 		attacking = false;
+		renderer = GetComponent<Renderer>();
+		if(renderer == null)
+		{
+			renderer = GetComponentInChildren<Renderer>();
+		}
+		if(renderer is SkinnedMeshRenderer)
+		{
+			base1 = (renderer as SkinnedMeshRenderer).materials[0].GetColor("Color_DC7E23C2");
+			base2 = (renderer as SkinnedMeshRenderer).materials[1].GetColor("Color_DC7E23C2");
+		}
     }
 
     // Update is called once per frame
@@ -113,6 +129,23 @@ public class EnemyHand : MonoBehaviour
         {
             HorizontalSwipe();
         }
+
+		if(damageTimer > 0)
+		{
+			damageTimer -= Time.deltaTime;
+			if(damageTimer <= 0)
+			{
+				if (renderer is SkinnedMeshRenderer)
+				{
+					(renderer as SkinnedMeshRenderer).materials[0].SetColor("Color_DC7E23C2", base1);
+					(renderer as SkinnedMeshRenderer).materials[1].SetColor("Color_DC7E23C2", base2);
+				}
+				else if (renderer is SpriteRenderer)
+				{
+					(renderer as SpriteRenderer).color = Color.white;
+				}
+			}
+		}
         
     }
 
@@ -259,5 +292,24 @@ public class EnemyHand : MonoBehaviour
 		{
 			PIS.Damage(1);
 		}
+	}
+
+	public void Damage(int dam)
+	{
+		if(damageTimer > 0)
+		{
+			return;
+		}
+		damageTimer = 1;
+		//turn red
+		if (renderer is SkinnedMeshRenderer)
+		{
+			(renderer as SkinnedMeshRenderer).materials[0].SetColor("Color_DC7E23C2", Color.red);
+			(renderer as SkinnedMeshRenderer).materials[1].SetColor("Color_DC7E23C2", Color.red);
+		}
+		else if (renderer is SpriteRenderer){
+			(renderer as SpriteRenderer).color = Color.red;
+		}
+		Debug.Log("3");
 	}
 }

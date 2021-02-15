@@ -39,6 +39,13 @@ public class AttackClass
 				if (healthComponent != null)
 				{
 					healthComponent.Damage(damage, Vector2.zero);
+					
+				}
+				EnemyHand enemyHand = hit.GetComponent<EnemyHand>();
+				if(enemyHand != null)
+				{
+					Debug.Log("Test");
+					enemyHand.Damage(1);
 				}
 			}
 			hasDamaged = true;
