@@ -11,12 +11,14 @@ public class abilities : MonoBehaviour
     public float enemySlowTime = 10;
     bool isCooldown = false;
     public KeyCode ability1;
+    public GameObject timeFog;
 
     // Start is called before the first frame update
     void Start()
     {
         abilityImage1.fillAmount = 0;
         battleManager = mainCamera.GetComponent<BattleManager>();
+        timeFog.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,6 +34,7 @@ public class abilities : MonoBehaviour
             isCooldown = true;
             abilityImage1.fillAmount = 1;
             battleManager.timeMultiplier = 0.2f;
+            timeFog.SetActive(true);
         }
 
         if (isCooldown)
@@ -41,6 +44,7 @@ public class abilities : MonoBehaviour
             if (abilityImage1.fillAmount <= 0.65)
             {
                 battleManager.timeMultiplier = 1.0f;
+                timeFog.SetActive(false);
 
             }
 
