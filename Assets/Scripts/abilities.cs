@@ -8,6 +8,7 @@ public class abilities : MonoBehaviour
     private BattleManager battleManager;
     public Image abilityImage1;
     public float cooldown = 20;
+    public float enemySlowTime = 10;
     bool isCooldown = false;
     public KeyCode ability1;
 
@@ -28,7 +29,6 @@ public class abilities : MonoBehaviour
     {
         if(Input.GetKey(ability1) && isCooldown == false)
         {
-
             isCooldown = true;
             abilityImage1.fillAmount = 1;
             battleManager.timeMultiplier = 0.2f;
@@ -38,11 +38,16 @@ public class abilities : MonoBehaviour
         {
             abilityImage1.fillAmount -= 1 / cooldown * Time.deltaTime;
 
+            if (abilityImage1.fillAmount <= 0.65)
+            {
+                battleManager.timeMultiplier = 1.0f;
+
+            }
+
             if (abilityImage1.fillAmount <= 0)
             {
                 abilityImage1.fillAmount = 0;
                 isCooldown = false;
-                battleManager.timeMultiplier = 1.0f;
             }
         }
     }
