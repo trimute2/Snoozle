@@ -19,30 +19,35 @@ public class EnemyHand : MonoBehaviour
     public GameObject player;
     public GameObject movementZone;
     public GameObject ground;
+    public GameObject mainCamera;
     private BoxCollider2D movementZoneBox;
     private BoxCollider2D groundBox;
-
     private BoxCollider2D handBox;
+    private BattleManager battleManager;
 
-    public float movementSpeedHorizontal;
-    public float movementSpeedVertical;
+    private float movementSpeedHorizontal = 15f;
+    private float movementSpeedVertical = 18f;
     [SerializeField] private bool movingRight;
     [SerializeField] private bool movingUp;
     private bool atHorizontalEdge;
 
-    private float verticalSlamRange = 0.1f;
-    private float verticalSlamSpeed = 8f;
+    private float verticalSlamRange = 0.25f;
+    private float verticalSlamSpeed = 30f;
 
-    private float horizontalSwipeYSpeed = 4f;
-    private float horizontalSwipeXSpeed = 8f;
+    private float horizontalSwipeYSpeed = 20f;
+    private float horizontalSwipeXSpeed = 30f;
 
     [SerializeField] private float actionTimer = 0f;
     private float minimumMoveDuration = 1f;
-    private float verticalSlamDuration = 2f;
+    private float verticalSlamDuration = 1.5f;
 
     System.Random rnd;
+
+    //Percent chance of attack occuring under proper conditions
     private float horizontalSwipeChance = 50f;
     private float verticalSlamChance = 75f;
+
+    private float timeMultiplier;
 
     // Start is called before the first frame update
     void Start()
@@ -50,13 +55,17 @@ public class EnemyHand : MonoBehaviour
         movementZoneBox = movementZone.GetComponent<BoxCollider2D>();
         groundBox = ground.GetComponent<BoxCollider2D>();
         handBox = GetComponent<BoxCollider2D>();
+        battleManager = mainCamera.GetComponent<BattleManager>();
         rnd = new System.Random();
         atHorizontalEdge = false;
+        timeMultiplier = battleManager.timeMultiplier;
     }
 
     // Update is called once per frame
     void Update()
     {
+        timeMultiplier = battleManager.timeMultiplier;
+
         // Generate a number from 0-99 for use in attack chance rolls
         int randomAction = rnd.Next(0, 100);
 
@@ -108,12 +117,12 @@ public class EnemyHand : MonoBehaviour
     public void Move()
     {
         atHorizontalEdge = false;
-        actionTimer += Time.deltaTime;
+        actionTimer += Time.deltaTime * timeMultiplier;
         
         //Horizontal movement section
         if (movingRight)
         {
-            transform.position += new Vector3(movementSpeedHorizontal * Time.deltaTime, 0, 0);
+            transform.position += new Vector3(movementSpeedHorizontal * Time.deltaTime * timeMultiplier, 0, 0);
 
             if (handBox.bounds.max.x > movementZoneBox.bounds.max.x)
             {
@@ -123,7 +132,7 @@ public class EnemyHand : MonoBehaviour
         }
         else
         {
-            transform.position -= new Vector3(movementSpeedHorizontal * Time.deltaTime, 0, 0);
+            transform.position -= new Vector3(movementSpeedHorizontal * Time.deltaTime * timeMultiplier, 0, 0);
 
             if (handBox.bounds.min.x < movementZoneBox.bounds.min.x)
             {
@@ -135,7 +144,7 @@ public class EnemyHand : MonoBehaviour
         //Vertical movement section
         if (movingUp)
         {
-            transform.position += new Vector3(0, movementSpeedVertical * Time.deltaTime, 0);
+            transform.position += new Vector3(0, movementSpeedVertical * Time.deltaTime * timeMultiplier, 0);
 
             if (handBox.bounds.max.y > movementZoneBox.bounds.max.y)
             {
@@ -144,7 +153,7 @@ public class EnemyHand : MonoBehaviour
         }
         else
         {
-            transform.position -= new Vector3(0, movementSpeedVertical * Time.deltaTime, 0);
+            transform.position -= new Vector3(0, movementSpeedVertical * Time.deltaTime * timeMultiplier, 0);
 
             if (handBox.bounds.min.y < movementZoneBox.bounds.min.y)
             {
@@ -174,13 +183,13 @@ public class EnemyHand : MonoBehaviour
         //Step 1: The hand lowers itself to just above the ground
         if (handBox.bounds.min.y > groundBox.bounds.max.y)
         {
-            transform.position -= new Vector3 (0, horizontalSwipeYSpeed * Time.deltaTime, 0);
+            transform.position -= new Vector3 (0, horizontalSwipeYSpeed * Time.deltaTime * timeMultiplier, 0);
         }
 
         //Step 2: The hand moves quickly along the floor until it reaches the other side of the arena
         else if (movingRight)
         {
-            transform.position += new Vector3 (horizontalSwipeXSpeed * Time.deltaTime, 0, 0);
+            transform.position += new Vector3 (horizontalSwipeXSpeed * Time.deltaTime * timeMultiplier, 0, 0);
 
             //Once the hand reaches the other side of the arena, return to moving state
             if (handBox.bounds.max.x >= movementZoneBox.bounds.max.x)
@@ -191,7 +200,7 @@ public class EnemyHand : MonoBehaviour
         }
         else if (!movingRight)
         {
-            transform.position -= new Vector3 (horizontalSwipeXSpeed * Time.deltaTime, 0, 0);
+            transform.position -= new Vector3 (horizontalSwipeXSpeed * Time.deltaTime * timeMultiplier, 0, 0);
 
             //Once the hand reaches the other side of the arena, return to moving state
             if (handBox.bounds.min.x <= movementZoneBox.bounds.min.x)
@@ -208,22 +217,22 @@ public class EnemyHand : MonoBehaviour
         currentState = HandState.VerticalSlam;
 
         //Step 3: The hand rests on the ground for a moment, allowing the player to counterattack
-        actionTimer += Time.deltaTime;
+        actionTimer += Time.deltaTime * timeMultiplier;
         if (handBox.bounds.min.y <= groundBox.bounds.max.y)
         {
-            //Animate, probably
+            //Animate, probably?
         }
 
         //Step 1: The hand rears up, rising a little
-        else if (actionTimer <= verticalSlamDuration * 0.25f)
+        else if (actionTimer <= verticalSlamDuration * 0.15f)
         {
-            transform.position += new Vector3(0, verticalSlamSpeed / 4 * Time.deltaTime, 0);
+            transform.position += new Vector3(0, verticalSlamSpeed / 4 * Time.deltaTime * timeMultiplier, 0);
         }
 
         //Step 2: The hand quickly slams down until it strikes the ground
         else
         {
-            transform.position -= new Vector3(0, verticalSlamSpeed * Time.deltaTime, 0);
+            transform.position -= new Vector3(0, verticalSlamSpeed * Time.deltaTime * timeMultiplier, 0);
         }
 
         //Once the attck's duration has been reached, return to moving state
