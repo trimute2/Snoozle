@@ -7,6 +7,8 @@ public class Projectile : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D projectileBody;
     public int dmg = 10;
+    public GameObject EnemyHand1;
+    public GameObject EnemyHand2;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +24,8 @@ public class Projectile : MonoBehaviour
         //gets info of object we hit
         Debug.Log(hitInfo.name);
         //once we have an enemy time this will call it's take damage function
-        /*Enemy enemy = hitInfo.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            enemy.TakeDamage(dmg);
-        }*/
+        //it takes damage
+        
 
         Destroy(gameObject);
     }

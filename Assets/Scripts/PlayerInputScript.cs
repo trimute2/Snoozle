@@ -32,6 +32,9 @@ public class PlayerInputScript : MonoBehaviour
 
 	private SpriteRenderer spriteRenderer;
 
+	//Animator Stuff
+	public CharacterController controller;
+	public Animator animator;
 	private void OnEnable()
 	{
 		entityScript = GetComponent<EntityScript>();
@@ -47,6 +50,7 @@ public class PlayerInputScript : MonoBehaviour
     {
 		Vector2 move = Vector2.zero;
 		move.x = Input.GetAxis("Horizontal") * MaxSpeed;
+		animator.SetFloat("speed",Mathf.Abs(move.x));
 		if(move.x > 0)
 		{
 			facing = 1;
@@ -60,6 +64,7 @@ public class PlayerInputScript : MonoBehaviour
 			Vector2 vec = entityScript.Velocity;
 			vec.y = TakeOffSpeed;
 			entityScript.Velocity = vec;
+			animator.SetBool("IsJumping", true);
 		}
 
 		entityScript.targetVelocity = move;
@@ -79,10 +84,12 @@ public class PlayerInputScript : MonoBehaviour
 			if (Input.GetButton("Fire1"))
 			{
 				Attack1Input = true;
+				animator.SetBool("isAttacking", true);
 			}
 			if (Input.GetButton("Fire2"))
 			{
 				Attack2Input = true;
+				animator.SetBool("isShooting", false);
 			}
 		}
 
