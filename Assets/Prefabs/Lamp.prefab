@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6876390646268239492}
   - component: {fileID: 6848177269207532426}
   - component: {fileID: 6857011136721383308}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lamp_Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 726dfc65340b62e4f8b5aae8e1684d0b, type: 2}
-  - {fileID: 2100000, guid: e095cbc9bd01bdf47887f90ac89bfd77, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +90,7 @@ GameObject:
   - component: {fileID: 6877967021751367910}
   - component: {fileID: 6888572497156105062}
   - component: {fileID: 6880475352145568922}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +104,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6879791155127490182}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18, y: 0, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
