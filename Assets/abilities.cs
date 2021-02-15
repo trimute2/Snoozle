@@ -26,6 +26,7 @@ public class abilities : MonoBehaviour
     {
         if(Input.GetKey(ability1) && isCooldown == false)
         {
+
             isCooldown = true;
             abilityImage1.fillAmount = 1;
         }
