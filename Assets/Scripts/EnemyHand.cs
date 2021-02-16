@@ -68,7 +68,7 @@ public class EnemyHand : MonoBehaviour
         atHorizontalEdge = false;
         timeMultiplier = battleManager.timeMultiplier;
 		attacking = false;
-		renderer = GetComponent<Renderer>();
+		renderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
 		if(renderer == null)
 		{
 			renderer = GetComponentInChildren<Renderer>();
@@ -137,8 +137,8 @@ public class EnemyHand : MonoBehaviour
 			{
 				if (renderer is SkinnedMeshRenderer)
 				{
-					(renderer as SkinnedMeshRenderer).materials[0].SetColor("Color_DC7E23C2", base1);
-					(renderer as SkinnedMeshRenderer).materials[1].SetColor("Color_DC7E23C2", base2);
+					(renderer as SkinnedMeshRenderer).materials[0].SetInt("_IsTintRed", 0);
+					(renderer as SkinnedMeshRenderer).materials[1].SetInt("_IsTintRed", 0);
 				}
 				else if (renderer is SpriteRenderer)
 				{
@@ -304,10 +304,10 @@ public class EnemyHand : MonoBehaviour
 		//turn red
 		if (renderer is SkinnedMeshRenderer)
 		{
-			(renderer as SkinnedMeshRenderer).materials[0].SetColor("Color_DC7E23C2", Color.red);
-			(renderer as SkinnedMeshRenderer).materials[1].SetColor("Color_DC7E23C2", Color.red);
-		}
-		else if (renderer is SpriteRenderer){
+            (renderer as SkinnedMeshRenderer).materials[0].SetInt("_IsTintRed", 1);
+            (renderer as SkinnedMeshRenderer).materials[1].SetInt("_IsTintRed", 1);
+        }
+        else if (renderer is SpriteRenderer){
 			(renderer as SpriteRenderer).color = Color.red;
 		}
 		Debug.Log("3");
