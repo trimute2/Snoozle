@@ -65,7 +65,6 @@ public class PlayerInputScript : MonoBehaviour
 			Vector2 vec = entityScript.Velocity;
 			vec.y = TakeOffSpeed;
 			entityScript.Velocity = vec;
-			animator.SetBool("IsJumping", true);
 		}
 
 		entityScript.targetVelocity = move;
@@ -82,16 +81,28 @@ public class PlayerInputScript : MonoBehaviour
 		if (AllowAttackInput)
 		{
 			//buffer attack inputs
-			if (Input.GetButton("Fire1"))
+			if (Input.GetKeyDown(KeyCode.E))
 			{
 				Attack1Input = true;
 				animator.SetBool("isAttacking", true);
 			}
-			if (Input.GetButton("Fire2"))
+			else
+            {
+				animator.SetBool("isShooting", false);
+				animator.SetBool("isAttacking", false);
+
+			}
+			if (Input.GetKeyDown(KeyCode.Q))
 			{
 				Attack2Input = true;
+				animator.SetBool("isShooting", true);
+			}
+			else
+            {
+				animator.SetBool("isAttacking", false);
 				animator.SetBool("isShooting", false);
 			}
+
 		}
 
 		if (AllowNewAttack)

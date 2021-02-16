@@ -10,7 +10,7 @@ Material:
   m_Name: ThickFog
   m_Shader: {fileID: -6465566751694194690, guid: 00a81e3b6e8a3e946a44b9930b7ac967,
     type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
