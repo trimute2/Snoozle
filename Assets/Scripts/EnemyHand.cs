@@ -50,7 +50,7 @@ public class EnemyHand : MonoBehaviour
     private float timeMultiplier;
 
 	private bool attacking;
-	private Renderer renderer;
+	[SerializeField] private Renderer renderer;
 
 	private Color base1;
 	private Color base2;
@@ -68,7 +68,6 @@ public class EnemyHand : MonoBehaviour
         atHorizontalEdge = false;
         timeMultiplier = battleManager.timeMultiplier;
 		attacking = false;
-		renderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
 		if(renderer == null)
 		{
 			renderer = GetComponentInChildren<Renderer>();
