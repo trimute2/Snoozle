@@ -49,6 +49,10 @@ public class EntityScript : MonoBehaviour
 	//other components
 	private Rigidbody2D rbody;
 
+	// Audio
+	[SerializeField] protected float walkingSoundPlaybackCoolDown;
+	protected float walkSoundPlaybackTimer;
+
     void OnEnable()
     {
 		rbody = GetComponent<Rigidbody2D>();
@@ -59,6 +63,9 @@ public class EntityScript : MonoBehaviour
 		contactFilter.useTriggers = false;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
+
+		// Audio
+		walkSoundPlaybackTimer = 0.1f;
 	}
 
 	// Update is called once per frame
@@ -95,6 +102,8 @@ public class EntityScript : MonoBehaviour
 
 	void Movement(Vector2 move, bool yMovement)
 	{
+		PlayWalkingSound();
+
 		float distance = move.magnitude;
 
 		if (distance > minMoveDistance)
@@ -130,5 +139,24 @@ public class EntityScript : MonoBehaviour
 			}
 		}
 		rbody.position = rbody.position + move.normalized * distance;
+	}
+
+	// Audio
+	private void PlayWalkingSound()
+    {
+		if (walkSoundPlaybackTimer <= 0f)
+        {
+			walkSoundPlaybackTimer = walkingSoundPlaybackCoolDown;
+			AudioManager.Instance.PlayOneShotSound("walk");
+		}
+
+		if (Mathf.Abs(targetVelocity.x) > Mathf.Epsilon)
+        {
+			walkSoundPlaybackTimer -= Time.deltaTime;
+		}
+		else
+        {
+			walkSoundPlaybackTimer = walkingSoundPlaybackCoolDown;
+		}
 	}
 }
