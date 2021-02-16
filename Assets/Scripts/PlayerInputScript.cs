@@ -32,6 +32,14 @@ public class PlayerInputScript : MonoBehaviour
 
 	private SpriteRenderer spriteRenderer;
 
+	public int Facing
+	{
+		get
+		{
+			return facing;
+		}
+	}
+
 	//Animator Stuff
 	public CharacterController controller;
 	public Animator animator;
