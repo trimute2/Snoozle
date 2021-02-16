@@ -21,8 +21,14 @@ public class Projectile : MonoBehaviour
     //when bullet hits enemy
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        //gets info of object we hit
-        Debug.Log(hitInfo.name);
+		EnemyHand enemyHand = hitInfo.GetComponent<EnemyHand>();
+		if (enemyHand != null)
+		{
+			//Debug.Log("Test");
+			enemyHand.Damage(dmg);
+		}
+		//gets info of object we hit
+		Debug.Log(hitInfo.name);
         //once we have an enemy time this will call it's take damage function
         //it takes damage
         

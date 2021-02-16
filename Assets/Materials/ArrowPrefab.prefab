@@ -145,4 +145,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   projectileBody: {fileID: 8635360843523436516}
-  dmg: 10
+  dmg: 2
+  EnemyHand1: {fileID: 0}
+  EnemyHand2: {fileID: 0}

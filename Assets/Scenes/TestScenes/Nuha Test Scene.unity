@@ -725,6 +725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeMultiplier: 1
+  numhands: 2
 --- !u!1 &461140316
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,6 +784,7 @@ MonoBehaviour:
   movementZone: {fileID: 1909333541}
   ground: {fileID: 1731499382}
   mainCamera: {fileID: 429540105}
+  maxHealth: 0
   movingRight: 1
   movingUp: 0
   actionTimer: 0
@@ -935,6 +937,7 @@ MonoBehaviour:
   movementZone: {fileID: 1909333541}
   ground: {fileID: 1731499382}
   mainCamera: {fileID: 429540105}
+  maxHealth: 0
   movingRight: 0
   movingUp: 1
   actionTimer: 0
@@ -1066,6 +1069,11 @@ PrefabInstance:
       propertyPath: renderer
       value: 
       objectReference: {fileID: 1408386414}
+    - target: {fileID: 8323477652234837549, guid: 194f14970740d9046a5db5eff7ab82cb,
+        type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8703556473003459734, guid: 194f14970740d9046a5db5eff7ab82cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2210,6 +2218,16 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 2133222196}
+    - target: {fileID: 8848850067828593438, guid: cc0a66eed6685884e8b769e9e2cd1f6f,
+        type: 3}
+      propertyPath: attacks.Array.data[0].damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848850067828593438, guid: cc0a66eed6685884e8b769e9e2cd1f6f,
+        type: 3}
+      propertyPath: damageTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8848850067828593439, guid: cc0a66eed6685884e8b769e9e2cd1f6f,
         type: 3}
       propertyPath: m_SpriteTilingProperty.border.x
@@ -2752,6 +2770,11 @@ PrefabInstance:
         type: 3}
       propertyPath: movingRight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8323477652234837549, guid: 194f14970740d9046a5db5eff7ab82cb,
+        type: 3}
+      propertyPath: maxHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8703556473003459734, guid: 194f14970740d9046a5db5eff7ab82cb,
         type: 3}

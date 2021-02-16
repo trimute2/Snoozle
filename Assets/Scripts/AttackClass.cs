@@ -44,8 +44,8 @@ public class AttackClass
 				EnemyHand enemyHand = hit.GetComponent<EnemyHand>();
 				if(enemyHand != null)
 				{
-					Debug.Log("Test");
-					enemyHand.Damage(1);
+					//Debug.Log("Test");
+					enemyHand.Damage(damage);
 				}
 			}
 			hasDamaged = true;

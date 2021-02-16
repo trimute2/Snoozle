@@ -20,6 +20,9 @@ public class EnemyHand : MonoBehaviour
     public GameObject movementZone;
     public GameObject ground;
     public GameObject mainCamera;
+
+	public int maxHealth;
+
     private BoxCollider2D movementZoneBox;
     private BoxCollider2D groundBox;
     private BoxCollider2D handBox;
@@ -57,6 +60,8 @@ public class EnemyHand : MonoBehaviour
 
 	private float damageTimer;
 
+	private int health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +82,7 @@ public class EnemyHand : MonoBehaviour
 			base1 = (renderer as SkinnedMeshRenderer).materials[0].GetColor("Color_DC7E23C2");
 			base2 = (renderer as SkinnedMeshRenderer).materials[1].GetColor("Color_DC7E23C2");
 		}
+		health = maxHealth;
     }
 
     // Update is called once per frame
@@ -309,6 +315,13 @@ public class EnemyHand : MonoBehaviour
         else if (renderer is SpriteRenderer){
 			(renderer as SpriteRenderer).color = Color.red;
 		}
-		Debug.Log("3");
+		health -= dam;
+		if (health <= 0)
+		{
+			battleManager.removeHand();
+			Destroy(gameObject);
+		}
+
+		//Debug.Log("3");
 	}
 }
