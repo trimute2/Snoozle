@@ -73,6 +73,7 @@ public class PlayerInputScript : MonoBehaviour
 			Vector2 vec = entityScript.Velocity;
 			vec.y = TakeOffSpeed;
 			entityScript.Velocity = vec;
+			AudioManager.Instance.PlayOneShotSound("jump", AudioSourceType.Movement);
 		}
 
 		entityScript.targetVelocity = move;
@@ -89,7 +90,7 @@ public class PlayerInputScript : MonoBehaviour
 		if (AllowAttackInput)
 		{
 			//buffer attack inputs
-			if (Input.GetKeyDown(KeyCode.E))
+			if (Input.GetKeyDown(KeyCode.K))
 			{
 				Attack1Input = true;
 				animator.SetBool("isAttacking", true);
@@ -100,7 +101,7 @@ public class PlayerInputScript : MonoBehaviour
 				animator.SetBool("isAttacking", false);
 
 			}
-			if (Input.GetKeyDown(KeyCode.Q))
+			if (Input.GetKeyDown(KeyCode.J))
 			{
 				Attack2Input = true;
 				animator.SetBool("isShooting", true);

@@ -147,7 +147,7 @@ public class EntityScript : MonoBehaviour
 		if (walkSoundPlaybackTimer <= 0f)
         {
 			walkSoundPlaybackTimer = walkingSoundPlaybackCoolDown;
-			AudioManager.Instance.PlayOneShotSound("walk");
+			AudioManager.Instance.PlayOneShotSound("walk", AudioSourceType.Movement);
 		}
 
 		if (Mathf.Abs(targetVelocity.x) > Mathf.Epsilon)

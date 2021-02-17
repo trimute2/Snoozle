@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -490,6 +490,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ec84dff4bee2b8540b21a3e1566ec7f3, type: 3}
   - {fileID: 8300000, guid: a1f025e551891a940bd0195fe1f69a37, type: 3}
   - {fileID: 8300000, guid: d43afb27ca54fb643969fe342e001747, type: 3}
+  - {fileID: 8300000, guid: ebcd5a099b41e454fba0afa7ce557975, type: 3}
 --- !u!4 &398990143
 Transform:
   m_ObjectHideFlags: 0
@@ -609,6 +610,7 @@ GameObject:
   - component: {fileID: 429540106}
   - component: {fileID: 429540109}
   - component: {fileID: 429540110}
+  - component: {fileID: 429540111}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -726,6 +728,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeMultiplier: 1
   numhands: 2
+--- !u!82 &429540111
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429540105}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 976645c341657c34b919a578a437ef75, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &461140316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,6 +1162,11 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 429540105}
+    - target: {fileID: 8323477652234837549, guid: 194f14970740d9046a5db5eff7ab82cb,
+        type: 3}
+      propertyPath: maxHealth
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8703556473003459734, guid: 194f14970740d9046a5db5eff7ab82cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1845,7 +1948,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 3840, y: 2160}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2758,7 +2861,7 @@ PrefabInstance:
     - target: {fileID: 8323477652234837549, guid: 194f14970740d9046a5db5eff7ab82cb,
         type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8703556473003459734, guid: 194f14970740d9046a5db5eff7ab82cb,
         type: 3}
@@ -3007,3 +3110,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2133222197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133222188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f7b09e2aa1e754bb8079c7ebdb1543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 429540105}
+  abilityImage1: {fileID: 316827031}
+  cooldown: 14
+  enemySlowTime: 7
+  ability1: 107
+  timeFog: {fileID: 1993575999}

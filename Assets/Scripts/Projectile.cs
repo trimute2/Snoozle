@@ -13,6 +13,9 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Attttack");
+        AudioManager.Instance.PlayOneShotSound("shoot_arrow", AudioSourceType.Weapon);
+
         //rigidbody move right according to speed
         projectileBody.velocity = transform.right * speed;
         Destroy(gameObject, 2f);

@@ -14,7 +14,7 @@ public class BattleManager : MonoBehaviour
 		if (numhands==0)
 		{
 			//victory here
-			GameStats.Instance.didPlayerWin = true;
+			GameStats.Instance.EndGame(true);
 		}
 	}
 }

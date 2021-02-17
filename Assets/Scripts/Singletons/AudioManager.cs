@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AudioSourceType
+{
+    Weapon,
+    Movement,
+    Effect
+}
+
 public class AudioManager : Singleton<AudioManager>
 {
-    private enum UIAudioSourceType
-    {
-        Loop,
-        OneShot
-    }
 
     private Dictionary<string, AudioClip> audioDict;
 
-    private AudioSource loopSoundSrc;
-    private AudioSource oneShotSoundSrc;
+    private AudioSource movementSound1;
+    private AudioSource movementSound2;
+    private AudioSource weaponSound;
+    private AudioSource soundEffectSrc;
 
     // Start is called before the first frame update
     void Start()
@@ -41,62 +45,79 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    private void PlayAudioClip(string clipName, UIAudioSourceType targetSrc)
+    private void PlayAudioClip(string clipName, AudioSourceType targetSrc)
     {
-        if (targetSrc == UIAudioSourceType.Loop)
+        if (targetSrc == AudioSourceType.Movement)
         {
             if (audioDict == null || !audioDict.ContainsKey(clipName))
                 return;
 
-            if (loopSoundSrc == null)
+            if (movementSound1 == null)
             {
-                loopSoundSrc = gameObject.AddComponent<AudioSource>();
-                loopSoundSrc.loop = true;
-                oneShotSoundSrc.playOnAwake = false;
+                movementSound1 = gameObject.AddComponent<AudioSource>();
+                movementSound1.loop = false;
+                movementSound1.playOnAwake = false;
             }
 
-            loopSoundSrc.clip = audioDict[clipName];
-            loopSoundSrc.Play();
+            if (clipName != "walk")
+            {
+                if (movementSound2 == null)
+                {
+                    movementSound2 = gameObject.AddComponent<AudioSource>();
+                    movementSound2.loop = false;
+                    movementSound2.playOnAwake = false;
+                }
+
+                movementSound2.clip = audioDict[clipName];
+                movementSound2.Play();
+            }
+            else
+            {
+                movementSound1.clip = audioDict[clipName];
+                movementSound1.Play();
+            }
+
         }
-        else if (targetSrc == UIAudioSourceType.OneShot)
+        else if (targetSrc == AudioSourceType.Weapon)
         {
             if (audioDict == null || !audioDict.ContainsKey(clipName))
                 return;
 
-            if (oneShotSoundSrc == null)
+            if (weaponSound == null)
             {
-                oneShotSoundSrc = gameObject.AddComponent<AudioSource>();
-                oneShotSoundSrc.loop = false;
-                oneShotSoundSrc.playOnAwake = false;
+                weaponSound = gameObject.AddComponent<AudioSource>();
+                weaponSound.loop = false;
+                weaponSound.playOnAwake = false;
             }
 
-            oneShotSoundSrc.clip = audioDict[clipName];
-            oneShotSoundSrc.Play();
-        }
-    }
+            if (weaponSound.isPlaying) 
+                return;
 
-    private void StopUIAudioClip(UIAudioSourceType targetSrc)
-    {
-        if (targetSrc == UIAudioSourceType.Loop)
+            weaponSound.clip = audioDict[clipName];
+            weaponSound.Play();
+        }
+        else if (targetSrc == AudioSourceType.Effect)
         {
-            if (loopSoundSrc != null)
-                loopSoundSrc.Stop();
+            if (audioDict == null || !audioDict.ContainsKey(clipName))
+                return;
+
+            if (soundEffectSrc == null)
+            {
+                soundEffectSrc = gameObject.AddComponent<AudioSource>();
+                soundEffectSrc.loop = false;
+                soundEffectSrc.playOnAwake = false;
+            }
+
+            if (soundEffectSrc.isPlaying)
+                return;
+
+            soundEffectSrc.clip = audioDict[clipName];
+            soundEffectSrc.Play();
         }
     }
 
-    public void PlayLoopSound(string soundName)
+    public void PlayOneShotSound(string soundName, AudioSourceType type)
     {
-        PlayAudioClip(soundName, UIAudioSourceType.Loop);
-    }
-
-    public void StopLoopSound(string soundName)
-    {
-        if (loopSoundSrc != null)
-            loopSoundSrc.Stop();
-    }
-
-    public void PlayOneShotSound(string soundName)
-    {
-        PlayAudioClip(soundName, UIAudioSourceType.OneShot);
+        PlayAudioClip(soundName, type);
     }
 }

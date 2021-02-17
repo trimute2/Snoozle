@@ -31,6 +31,8 @@ public class abilities : MonoBehaviour
     {
         if(Input.GetKey(ability1) && isCooldown == false)
         {
+            AudioManager.Instance.PlayOneShotSound("clock_ticking", AudioSourceType.Effect);
+
             isCooldown = true;
             abilityImage1.fillAmount = 1;
             battleManager.timeMultiplier = 0.2f;
